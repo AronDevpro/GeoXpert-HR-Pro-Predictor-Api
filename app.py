@@ -11,7 +11,7 @@ CORS(app)
 turnover_model = joblib.load('turnover_model.pkl')
 promotion_model = joblib.load('promotion_model.pkl')
 scaler = joblib.load('scaler.pkl')
-one_hot_encoder = joblib.load('one_hot_encoder.pkl')  # Load the saved OneHotEncoder
+one_hot_encoder = joblib.load('one_hot_encoder.pkl')
 
 @app.route('/turnover', methods=['POST'])
 @cross_origin()
@@ -23,11 +23,10 @@ def predict_turnover():
         # Convert input data to DataFrame
         input_data = pd.DataFrame([data])
 
+
         # Preprocess categorical features using OneHotEncoder
         categorical_features = ['Department', 'EducationLevel', 'JobTitle', 'DaysSinceStart']
         categorical_data = input_data[categorical_features]
-
-        print("1")
 
         # Transform categorical data using OneHotEncoder
         encoded_categorical_data = one_hot_encoder.transform(categorical_data)
@@ -88,4 +87,4 @@ def predict_promotion():
 
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(debug=True,port=8000)
